@@ -28,12 +28,24 @@ public class ProjectileControl : MonoBehaviour, ICrosshairAction
     public void HitArea()
     {
         RaycastHit2D[] hitArray = Physics2D.BoxCastAll(transform.position, Vector2.one * hitAreaSize, 0, Vector2.zero);
+        bool didHit = false;
         for(int i = 0; i < hitArray.Length; i++)
         {
-            if(hitArray[i].rigidbody.TryGetComponent(out BaseModule module) == false) { continue; }
+            BaseModule module = null;
+            if (hitArray[i].rigidbody)
+            {
+                module = hitArray[i].rigidbody.GetComponent<BaseModule>();
+            }
+            if (hitArray[i].collider)
+            {
+                module = hitArray[i].collider.GetComponent<BaseModule>();
+            }
+            if(module == null) { continue; }
             if(module.GetOwner().TryGetModule(out AnimatorModule animModule) == false) { continue; }
             animModule.SetAnimatorTrigger(hitTrigger);
+            didHit = true;
         }
+        if (didHit) { Destroy(gameObject); }
     }
 }
 
