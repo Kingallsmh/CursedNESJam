@@ -20,7 +20,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: SpriteTest_Mat 1
+  m_Name: Player2MekPalette_Mat
   m_Shader: {fileID: -6465566751694194690, guid: 0e20b0f42bafa414baeaf8294e40a876, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
