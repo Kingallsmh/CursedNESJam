@@ -16,9 +16,10 @@ public class ReticleFollower : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Vector2 reticlePosition;
+        Vector3 reticlePosition;
         reticlePosition.x = HandleXPosition();
         reticlePosition.y = HandleYPosition();
+        reticlePosition.z = reticle.position.z;
         reticle.position = reticlePosition;
     }
 
