@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class AttackModule : MonoBehaviour
+public class AttackModule : BaseModule
 {
     [SerializeField] GameObject projectilePrefab;
     [SerializeField] Transform crosshair;
@@ -10,11 +10,7 @@ public class AttackModule : MonoBehaviour
     {
         GameObject projectile = Instantiate(projectilePrefab);
         ICrosshairAction action = projectile.GetComponent<ICrosshairAction>();
-        action.SetCrosshairTarget(crosshair);
-        projectile.transform.position = transform.position;
-        Vector3 direction = (crosshair.position - transform.position).normalized;
-        projectile.GetComponent<Rigidbody>().linearVelocity = direction * speed;
-        
+        action.UseCrosshairAction(this, crosshair);        
     }
 
     public void SetInput(ButtonState button)

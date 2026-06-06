@@ -6,14 +6,18 @@ public class ProjectileControl : MonoBehaviour, ICrosshairAction
     [SerializeField] Rigidbody rb;
     [SerializeField] UnityEvent onReachedEnd;
     [SerializeField] float hitAreaSize = 0.1f;
-
     [SerializeField] string hitTrigger = "IsHit";
+
+    [SerializeField] float defaultSpeed = 15;
 
     float zTarget;
 
-    public void SetCrosshairTarget(Transform crosshair)
+    public void UseCrosshairAction(AttackModule owner, Transform crosshair)
     {
         zTarget = crosshair.position.z;
+        transform.position = owner.transform.position;
+        Vector3 direction = (crosshair.position - transform.position).normalized;
+        rb.linearVelocity = direction * defaultSpeed;
     }
 
     private void FixedUpdate()
@@ -47,9 +51,4 @@ public class ProjectileControl : MonoBehaviour, ICrosshairAction
         }
         if (didHit) { Destroy(gameObject); }
     }
-}
-
-public interface ICrosshairAction
-{
-    public void SetCrosshairTarget(Transform crosshair);
 }
