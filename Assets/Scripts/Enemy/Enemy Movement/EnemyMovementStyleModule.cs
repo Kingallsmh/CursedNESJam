@@ -19,6 +19,12 @@ public class EnemyMovementStyleModule : MonoBehaviour
     [Title("Required Reference(s):")]
     [SerializeField]
     Rigidbody2D m_rigidbodyRef;
+
+    [SerializeField]
+    StatImpactModule m_statImpactor;
+    [SerializeField]
+    string m_statName;
+    StatImpact m_stat;
     #endregion
 
     #region Methods
@@ -27,9 +33,10 @@ public class EnemyMovementStyleModule : MonoBehaviour
         if (m_rigidbodyRef == null)
             GetRigidybody2dReference();
 
-        m_movementStyle.Speed = m_startSpeed;
-        m_movementStyle.RigidbodyRef = m_rigidbodyRef;
+        GetStatForImpacting();
+        ApplySpeedStatChange();
 
+        m_movementStyle.RigidbodyRef = m_rigidbodyRef;
         m_movementStyle.SetUp();
     }
 
@@ -37,6 +44,12 @@ public class EnemyMovementStyleModule : MonoBehaviour
     {
         if (m_rigidbodyRef != null)
             m_movementStyle.UpdateMovement();
+    }
+
+    void OnDestroy()
+    {
+        if (m_stat != null)
+            m_stat.StatChangeEvent.RemoveListener(ApplySpeedStatChange);
     }
 
     void OnCollisionEnter2D(Collision2D collision)
@@ -56,5 +69,30 @@ public class EnemyMovementStyleModule : MonoBehaviour
     [Button]
     [FoldoutGroup("Testing")]
     public void UpdateSpeed(float newSpeed) => m_movementStyle.SetNewSpeed(newSpeed);
+
+    [Button]
+    [FoldoutGroup("Testing")]
+    public void GetStatForImpacting()
+    {
+        if (m_statImpactor == null)
+        {
+            Debug.Log($"Can't get stat of name {m_statName}!");
+            return;
+        }
+
+        m_stat = m_statImpactor.GetStat(m_statName);
+        m_stat.StatChangeEvent.RemoveListener(ApplySpeedStatChange);
+        m_stat.StatChangeEvent.AddListener(ApplySpeedStatChange);
+    }
+
+    [Button]
+    [FoldoutGroup("Testing")]
+    public void ApplySpeedStatChange()
+    {
+        if (m_statImpactor == null || m_stat == null)
+            return;
+
+        UpdateSpeed(m_stat.GetStatChange());
+    }
     #endregion
 }
