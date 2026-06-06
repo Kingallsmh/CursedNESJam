@@ -6,9 +6,12 @@ using UnityEngine;
 using System;
 
 /// <summary>
-/// TODO: Need a small "flexibility" point where if the player presses a 
-/// direction close to the cooldown end, it still allows for movement, because
-/// // right now it seems to "freeze" and feels gross
+/// A button navigation system that works akin to a
+/// FSM, though specifically for handling button
+/// navigation on a north-east-south-west directional
+/// system. Has some additional tools for setting up
+/// for user-friendliness, though there's other ways
+/// of doing this
 /// </summary>
 public class ButtonNavigationModule : MonoBehaviour
 {
@@ -104,7 +107,7 @@ public class ButtonNavigationModule : MonoBehaviour
         StartCoroutine(ButtonPressedCooldown());
     }
 
-    public void DirectionalTest(Vector2 input)
+    public void NavigateButtonsThroughMovementVector(Vector2 input)
     {
         if (m_ignoreMovementInteraction)
             return;
@@ -164,6 +167,109 @@ public class ButtonNavigationModule : MonoBehaviour
         m_currentIndex = m_buttonMap[m_currentIndex].RightButtonIndex;
         HighlightButton(true);
     }
+
+    [Title("Help With Setting Up: ")]
+    [Button(ButtonSizes.Large)]
+    public void SetVisualIndexForAid()
+    {
+        if (m_buttonMap == null || m_buttonMap.Count == 0)
+            return;
+
+        for (int index = m_buttonMap.Count - 1; index >= 0; -- index)
+            if (m_buttonMap[index] != null)
+                m_buttonMap[index].SetIndexInList(index);
+    }
+
+    [Button]
+    [FoldoutGroup("Auto Set Up Tools")]
+    public void SetButtonsToAutoGoToPreviousNextHorizontal(bool rightToLeft)
+    {
+        if (m_buttonMap == null || m_buttonMap.Count == 0)
+            return;
+        int first = 0;
+        int second = 0;
+
+        for (int index = m_buttonMap.Count - 1; index >= 0; --index)
+        {
+            if (m_buttonMap[index] != null)
+            {
+                if (rightToLeft)
+                {
+                    first = index + 1;
+                    second = index - 1;
+                }
+                else
+                {
+                    first = index - 1;
+                    second = index + 1;
+                }
+
+                m_buttonMap[index].LeftButtonIndex = Mathf.Clamp(first, 0, m_buttonMap.Count - 1);
+                m_buttonMap[index].RightButtonIndex = Mathf.Clamp(second, 0, m_buttonMap.Count - 1);
+
+                m_buttonMap[index].CanMoveLeft = (index != 0 && !rightToLeft || index != m_buttonMap.Count - 1 && rightToLeft);
+                m_buttonMap[index].CanMoveRight = (index != 0 && rightToLeft || index != m_buttonMap.Count - 1 && !rightToLeft);
+            }
+        }
+    }
+
+    [Button]
+    [FoldoutGroup("Auto Set Up Tools")]
+    public void SetButtonsToAutoGoToPreviousNextVertical(bool bottomToTop)
+    {
+        if (m_buttonMap == null || m_buttonMap.Count == 0)
+            return;
+
+        int first = 0;
+        int second = 0;
+
+        for (int index = m_buttonMap.Count - 1; index >= 0; --index)
+        {
+            if (m_buttonMap[index] != null)
+            {
+                if (bottomToTop)
+                {
+                    first = index - 1;
+                    second = index + 1;
+                }
+                else
+                {
+                    first = index + 1;
+                    second = index - 1;
+                }
+
+                m_buttonMap[index].DownButtonIndex = Mathf.Clamp(first, 0, m_buttonMap.Count - 1);
+                m_buttonMap[index].UpButtonIndex = Mathf.Clamp(second, 0, m_buttonMap.Count - 1);
+
+                m_buttonMap[index].CanMoveDown = (index != 0 && bottomToTop || index != m_buttonMap.Count - 1 && !bottomToTop);
+                m_buttonMap[index].CanMoveUp = (index != 0 && !bottomToTop || index != m_buttonMap.Count - 1 && bottomToTop);
+            }
+        }
+    }
+
+    [Button]
+    [FoldoutGroup("Auto Set Up Tools")]
+    public void ClearAllButtonNavigationDirections()
+    {
+        if (m_buttonMap == null || m_buttonMap.Count == 0)
+            return;
+
+        for (int index = m_buttonMap.Count - 1; index >= 0; --index)
+        {
+            if (m_buttonMap[index] != null)
+            {
+                m_buttonMap[index].UpButtonIndex = 0;
+                m_buttonMap[index].DownButtonIndex = 0;
+                m_buttonMap[index].LeftButtonIndex = 0;
+                m_buttonMap[index].RightButtonIndex = 0;
+
+                m_buttonMap[index].CanMoveUp = false;
+                m_buttonMap[index].CanMoveDown = false;
+                m_buttonMap[index].CanMoveLeft = false;
+                m_buttonMap[index].CanMoveRight = false;
+            }
+        }
+    }
     #endregion
 }
 
@@ -198,12 +304,16 @@ class NavigationalButton
     [ShowIf(nameof(CanMoveRight))]
     public int RightButtonIndex;
 
+    int m_indexInList;
+
     public string Title()
     {
         if (actualButton == null)
-            return "Button Navigator";
+            return $"Button Navigator : {m_indexInList}";
 
-        return actualButton.name;
+        return actualButton.name + $": {m_indexInList}";
     }
+
+    public void SetIndexInList(int index) => m_indexInList = index;
     #endregion
 }
