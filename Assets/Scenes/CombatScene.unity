@@ -539,7 +539,7 @@ Transform:
   m_GameObject: {fileID: 195726013}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 6, z: 20}
+  m_LocalPosition: {x: 0, y: 6.59, z: 20}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1151,7 +1151,7 @@ Transform:
   m_GameObject: {fileID: 565309338}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 17, z: 25}
+  m_LocalPosition: {x: 0, y: 15, z: 25}
   m_LocalScale: {x: 25.599998, y: 0.19999999, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1309,6 +1309,7 @@ GameObject:
   - component: {fileID: 693110591}
   - component: {fileID: 693110594}
   - component: {fileID: 693110596}
+  - component: {fileID: 693110597}
   m_Layer: 0
   m_Name: Enemy (1)
   m_TagString: Untagged
@@ -1351,6 +1352,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 8
   m_rigidbodyRef: {fileID: 693110593}
+  m_statImpactor: {fileID: 693110597}
+  m_statName: Speed
   references:
     version: 2
     RefIds:
@@ -1475,6 +1478,26 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Physics2DModule
   rb: {fileID: 693110593}
+--- !u!114 &693110597
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 693110589}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 76aacdb0ed6e253448584d6a0bc9ce92, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::StatImpactModule
+  m_statsToEffect:
+  - StatName: Speed
+    MinValue: 1
+    MaxValue: 10
+    CurrentValue: 4
+    StatChangeEvent:
+      m_PersistentCalls:
+        m_Calls: []
 --- !u!1 &722969745
 GameObject:
   m_ObjectHideFlags: 0
@@ -1988,6 +2011,7 @@ GameObject:
   - component: {fileID: 843660312}
   - component: {fileID: 843660313}
   - component: {fileID: 843660314}
+  - component: {fileID: 843660315}
   m_Layer: 0
   m_Name: Model
   m_TagString: Untagged
@@ -2075,6 +2099,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SpriteMaterialHandler
   rend: {fileID: 1105196170}
+--- !u!114 &843660315
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 843660310}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b96b0ae1b7eec99449ba22ef5b7661aa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SpriteYAdjustZ
+  target: {fileID: 843660311}
+  zOffset: 20
 --- !u!1 &930716028
 GameObject:
   m_ObjectHideFlags: 0
@@ -4471,7 +4509,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: -1
   m_MaskInteraction: 0
   m_Sprite: {fileID: 967012422, guid: 0cb9e558d21c0864bbbf52bbf7499810, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -4562,7 +4600,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: -1
   m_MaskInteraction: 0
   m_Sprite: {fileID: -1724418942, guid: 0cb9e558d21c0864bbbf52bbf7499810, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -4623,6 +4661,7 @@ GameObject:
   - component: {fileID: 1441206667}
   - component: {fileID: 1441206669}
   - component: {fileID: 1441206668}
+  - component: {fileID: 1441206670}
   m_Layer: 0
   m_Name: Model
   m_TagString: Untagged
@@ -4697,6 +4736,20 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &1441206670
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1441206666}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b96b0ae1b7eec99449ba22ef5b7661aa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SpriteYAdjustZ
+  target: {fileID: 1441206667}
+  zOffset: 20
 --- !u!1 &1470483409
 GameObject:
   m_ObjectHideFlags: 0
