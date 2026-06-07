@@ -2856,6 +2856,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Gameplay UI
       objectReference: {fileID: 0}
+    - target: {fileID: 5163664648784676540, guid: a3f940bf1963c7b4a835daad82b989c8, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5163664648784676540, guid: a3f940bf1963c7b4a835daad82b989c8, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6774933816660591895, guid: a3f940bf1963c7b4a835daad82b989c8, type: 3}
       propertyPath: m_statImpactor
       value: 
