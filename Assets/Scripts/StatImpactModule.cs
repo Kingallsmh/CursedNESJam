@@ -6,6 +6,8 @@ using System;
 
 public class StatImpactModule : BaseModule
 {
+    public List<StatImpact> StatsList { get => m_statsToEffect; }
+
     [SerializeField]
     List<StatImpact> m_statsToEffect = new List<StatImpact>();
 
