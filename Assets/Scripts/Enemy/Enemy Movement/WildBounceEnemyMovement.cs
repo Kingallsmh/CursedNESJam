@@ -1,6 +1,8 @@
 using Sirenix.OdinInspector;
+using System;
 using UnityEngine;
 
+[Serializable]
 public class WildBounceEnemyMovement : EnemyMovementStyle
 {
     #region Variables
