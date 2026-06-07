@@ -18,8 +18,6 @@ GameObject:
   - component: {fileID: 3631758610852605565}
   - component: {fileID: 3746993249016911535}
   - component: {fileID: 7591113345154261006}
-  - component: {fileID: 9178999104423620512}
-  - component: {fileID: 7704442616397056928}
   m_Layer: 0
   m_Name: Player Mek
   m_TagString: Untagged
@@ -44,6 +42,7 @@ Transform:
   - {fileID: 1573599199922089439}
   - {fileID: 4887232101516171069}
   - {fileID: 212637949171439280}
+  - {fileID: 4551579197630580012}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!50 &2898715553573459949
@@ -134,9 +133,9 @@ MonoBehaviour:
   moduleCollection:
   - {fileID: 1253084492476659998}
   - {fileID: 646762031650200940}
-  - {fileID: 7704442616397056928}
   - {fileID: 4529324579803687424}
   - {fileID: 6850733884087380360}
+  - {fileID: 3664133950068065548}
 --- !u!114 &1253084492476659998
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -413,7 +412,7 @@ MonoBehaviour:
         m_IsStatic: 0
         m_AssemblyName: 
         m_TypeName: 
-        m_Target: {fileID: 9178999104423620512}
+        m_Target: {fileID: 4409693337951520667}
         m_IsStaticForInstance: 0
         m_MethodName: SetInput
         m_Arguments:
@@ -1191,44 +1190,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!114 &9178999104423620512
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 940875189576134842}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dd8b958a4018b0f4f9cc93709a147e8a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ReticleFollower
-  reticle: {fileID: 212637949171439280}
-  xMovementPositionDistance: 0.8
-  yMovementPositionSpeed: 4
-  reticleRange: {x: 1.6, y: 16}
-  minXInputValue: 0.2
-  minYInputValue: 0.2
---- !u!114 &7704442616397056928
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 940875189576134842}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 76aacdb0ed6e253448584d6a0bc9ce92, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::StatImpactModule
-  m_statsToEffect:
-  - StatName: Health
-    MinValue: 0
-    MaxValue: 8
-    CurrentValue: 8
-    StatChangeEvent:
-      m_PersistentCalls:
-        m_Calls: []
 --- !u!1 &1719377622162089741
 GameObject:
   m_ObjectHideFlags: 0
@@ -1460,6 +1421,59 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+--- !u!1 &2509958988585355293
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4551579197630580012}
+  - component: {fileID: 3664133950068065548}
+  m_Layer: 0
+  m_Name: Stats
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4551579197630580012
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2509958988585355293}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8486638879674944990}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3664133950068065548
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2509958988585355293}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 76aacdb0ed6e253448584d6a0bc9ce92, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::StatImpactModule
+  m_statsToEffect:
+  - stat:
+      statName: Health
+      currentValue: 0
+    MinValue: 0
+    MaxValue: 8
+    StatChangeEvent:
+      m_PersistentCalls:
+        m_Calls: []
 --- !u!1 &2564398828182998690
 GameObject:
   m_ObjectHideFlags: 0
@@ -1470,6 +1484,7 @@ GameObject:
   m_Component:
   - component: {fileID: 212637949171439280}
   - component: {fileID: 376385277599321585}
+  - component: {fileID: 4409693337951520667}
   m_Layer: 0
   m_Name: Player Reticle
   m_TagString: Untagged
@@ -1510,6 +1525,22 @@ MonoBehaviour:
   - {fileID: 2100000, guid: 5838f49f31eb45c4ebe82c5b198118eb, type: 2}
   - {fileID: 2100000, guid: b846e54d1519c7841aae5b5909a99561, type: 2}
   timePerMaterial: 0.05
+--- !u!114 &4409693337951520667
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2564398828182998690}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dd8b958a4018b0f4f9cc93709a147e8a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ReticleFollower
+  reticle: {fileID: 4242516694745276892}
+  xMovementPositionDistance: 0.8
+  yMovementPositionSpeed: 4
+  reticleRange: {x: 1.6, y: 16}
 --- !u!1 &4791860102664686834
 GameObject:
   m_ObjectHideFlags: 0

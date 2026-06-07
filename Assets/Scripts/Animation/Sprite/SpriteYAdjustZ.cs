@@ -1,12 +1,15 @@
 using Unity.VisualScripting;
 using UnityEngine;
 
+/// <summary>
+/// Move the transform z position based on y so that they will automatically layer properly
+/// </summary>
 public class SpriteYAdjustZ : MonoBehaviour
 {
     [SerializeField] Transform target;
     [SerializeField] float zOffset;
 
-    // Update is called once per frame
+    
     void Update()
     {
         float zValue = target.position.y + zOffset;
