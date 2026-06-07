@@ -3302,7 +3302,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &4404657743914030657
 RectTransform:
   m_ObjectHideFlags: 0
@@ -6750,7 +6750,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ShopUINavigation
   m_buttonMap:
-  - actualButton: {fileID: 2933234067742772701}
+  - actualButton: {fileID: 1428853300267084598}
     CanMoveUp: 0
     UpButtonIndex: 0
     CanMoveDown: 1
@@ -6759,7 +6759,7 @@ MonoBehaviour:
     LeftButtonIndex: 0
     CanMoveRight: 0
     RightButtonIndex: 0
-  - actualButton: {fileID: 1428853300267084598}
+  - actualButton: {fileID: 910913526179096778}
     CanMoveUp: 1
     UpButtonIndex: 0
     CanMoveDown: 1
@@ -6768,31 +6768,22 @@ MonoBehaviour:
     LeftButtonIndex: 0
     CanMoveRight: 0
     RightButtonIndex: 0
-  - actualButton: {fileID: 910913526179096778}
-    CanMoveUp: 1
-    UpButtonIndex: 1
-    CanMoveDown: 1
-    DownButtonIndex: 3
-    CanMoveLeft: 0
-    LeftButtonIndex: 0
-    CanMoveRight: 0
-    RightButtonIndex: 0
   - actualButton: {fileID: 3656509983456237333}
     CanMoveUp: 1
-    UpButtonIndex: 2
+    UpButtonIndex: 1
     CanMoveDown: 0
     DownButtonIndex: 4
     CanMoveLeft: 0
     LeftButtonIndex: 0
     CanMoveRight: 1
-    RightButtonIndex: 4
+    RightButtonIndex: 3
   - actualButton: {fileID: 727705285208187028}
     CanMoveUp: 1
-    UpButtonIndex: 2
+    UpButtonIndex: 1
     CanMoveDown: 0
     DownButtonIndex: 4
     CanMoveLeft: 1
-    LeftButtonIndex: 3
+    LeftButtonIndex: 2
     CanMoveRight: 0
     RightButtonIndex: 2
   m_currentIndex: 0
