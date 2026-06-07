@@ -31,6 +31,12 @@ public class ButtonNavigationModule : BaseModule
     Color m_highlightColour = Color.darkRed;
     Color m_defaultColour;
 
+    [Title("Input Handling")]
+    [SerializeField]
+    bool m_matchInputActiveWithActiveState = true;
+    [SerializeField]
+    bool m_isInputActive = true;
+
     ColorBlock m_highlightBlock;
     ColorBlock m_defaultBlock;
 
@@ -39,11 +45,23 @@ public class ButtonNavigationModule : BaseModule
     #endregion
 
     #region Methods
-    private void Start()
+    void Start()
     {
         CleanListOfNulls();
         SetUpColourBlocks();
         HighlightButton(true);
+    }
+
+    void OnEnable()
+    {
+        if (m_matchInputActiveWithActiveState)
+            TurnSystemOn(true);
+    }
+
+    void OnDisable()
+    {
+        if (m_matchInputActiveWithActiveState)
+            TurnSystemOn(false);
     }
 
     void CleanListOfNulls()
@@ -78,8 +96,11 @@ public class ButtonNavigationModule : BaseModule
         m_buttonMap[m_currentIndex].actualButton.colors = m_defaultBlock;
     }
 
-    IEnumerator ButtonPressedCooldown()
+    IEnumerator ButtonPressedCooldown(bool justPressedWithCoolDown)
     {
+        if (justPressedWithCoolDown)
+            m_buttonMap[m_currentIndex].actualButton.onClick.Invoke();
+
         m_ignoreButtonPressInteraction = true;
         yield return new WaitForSeconds(m_cooldownTimeButtonPress);
         m_ignoreButtonPressInteraction = false;
@@ -96,19 +117,15 @@ public class ButtonNavigationModule : BaseModule
     [FoldoutGroup("Navigation Tools")]
     public void ClickCurrentButton(ButtonState state)
     {
-        if (!state.IsFirstDown())
+        if (!m_isInputActive || !state.IsFirstDown() || m_ignoreButtonPressInteraction)
             return;
 
-        if (m_ignoreButtonPressInteraction)
-            return;
-
-        m_buttonMap[m_currentIndex].actualButton.onClick.Invoke();
-        StartCoroutine(ButtonPressedCooldown());
+        StartCoroutine(ButtonPressedCooldown(true));
     }
 
     public void NavigateButtonsThroughMovementVector(Vector2 input)
     {
-        if (m_ignoreMovementInteraction)
+        if (!m_isInputActive || m_ignoreMovementInteraction)
             return;
 
         if (input.y > 0) MoveUp();
@@ -274,6 +291,31 @@ public class ButtonNavigationModule : BaseModule
                 m_buttonMap[index].CanMoveRight = false;
             }
         }
+    }
+
+    public void TurnSystemOn(bool isOn)
+    {
+        StopAllCoroutines();
+
+        if (isOn)
+        {
+            StartCoroutine(NavigationMovementCooldown());
+            StartCoroutine(ButtonPressedCooldown(false));
+        }
+
+        m_isInputActive = isOn;
+    }
+
+    public void TurnSystemAndObjectOn(bool isOn)
+    {
+        // Need to turn it on before the method plays, but if it's toggling off it needs the method to play first
+        if (isOn)
+            this.gameObject.SetActive(isOn);
+
+        TurnSystemOn(isOn);
+
+        if (!isOn)
+            this.gameObject.SetActive(isOn);
     }
     #endregion
 }
