@@ -13,7 +13,7 @@ using System;
 /// for user-friendliness, though there's other ways
 /// of doing this
 /// </summary>
-public class ButtonNavigationModule : MonoBehaviour
+public class ButtonNavigationModule : BaseModule
 {
     #region Variables
     [Title("Button Navigation ''Map''")]
@@ -102,7 +102,6 @@ public class ButtonNavigationModule : MonoBehaviour
         if (m_ignoreButtonPressInteraction)
             return;
 
-        Debug.Log($"{m_buttonMap[m_currentIndex].actualButton.name} button pressed!");
         m_buttonMap[m_currentIndex].actualButton.onClick.Invoke();
         StartCoroutine(ButtonPressedCooldown());
     }
@@ -116,8 +115,6 @@ public class ButtonNavigationModule : MonoBehaviour
         if (input.y < 0) MoveDown();
         if (input.x < 0) MoveLeft();
         if (input.x > 0) MoveRight();
-
-        StartCoroutine(NavigationMovementCooldown());
     }
 
     [Button]
@@ -130,6 +127,8 @@ public class ButtonNavigationModule : MonoBehaviour
         HighlightButton(false);
         m_currentIndex = m_buttonMap[m_currentIndex].UpButtonIndex;
         HighlightButton(true);
+
+        StartCoroutine(NavigationMovementCooldown());
     }
 
     [Button]
@@ -142,6 +141,8 @@ public class ButtonNavigationModule : MonoBehaviour
         HighlightButton(false);
         m_currentIndex = m_buttonMap[m_currentIndex].DownButtonIndex;
         HighlightButton(true);
+
+        StartCoroutine(NavigationMovementCooldown());
     }
 
     [Button]
@@ -154,6 +155,8 @@ public class ButtonNavigationModule : MonoBehaviour
         HighlightButton(false);
         m_currentIndex = m_buttonMap[m_currentIndex].LeftButtonIndex;
         HighlightButton(true);
+
+        StartCoroutine(NavigationMovementCooldown());
     }
 
     [Button]
@@ -166,6 +169,8 @@ public class ButtonNavigationModule : MonoBehaviour
         HighlightButton(false);
         m_currentIndex = m_buttonMap[m_currentIndex].RightButtonIndex;
         HighlightButton(true);
+
+        StartCoroutine(NavigationMovementCooldown());
     }
 
     [Title("Help With Setting Up: ")]

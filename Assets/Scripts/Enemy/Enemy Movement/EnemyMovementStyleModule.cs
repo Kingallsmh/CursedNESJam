@@ -3,7 +3,7 @@ using UnityEngine;
 
 [RequireComponent(typeof(Collider2D))]
 [RequireComponent(typeof(Rigidbody2D))]
-public class EnemyMovementStyleModule : MonoBehaviour
+public class EnemyMovementStyleModule : BaseModule
 {
     #region Variables
     [Title("Enemy Movement: ", Bold = true)]
