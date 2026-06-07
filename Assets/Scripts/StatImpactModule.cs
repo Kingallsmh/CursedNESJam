@@ -12,11 +12,32 @@ public class StatImpactModule : BaseModule
     [Button]
     public void CallStatEffect(string statName, float Value)
     {
+        if (string.IsNullOrWhiteSpace(statName) || statName.Length == 0)
+            return;
+
         foreach (StatImpact stat in m_statsToEffect)
         {
             if (stat != null && stat.StatName.ToLower() == statName.ToLower())
             {
                 stat.ApplyStatChange(Value);
+                return;
+            }
+        }
+
+        Debug.Log($"Stat {statName} was not found!");
+    }
+
+    [Button]
+    public void UpdateStatEffectsMaxValue(string statName, float max)
+    {
+        if (string.IsNullOrWhiteSpace(statName) || statName.Length == 0)
+            return;
+
+        foreach (StatImpact stat in m_statsToEffect)
+        {
+            if (stat != null && stat.StatName.ToLower() == statName.ToLower())
+            {
+                stat.MaxValue = max;
                 return;
             }
         }
