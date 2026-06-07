@@ -14,37 +14,30 @@ public class StatImpactModule : BaseModule
     [Button]
     public void CallStatEffect(string statName, float Value)
     {
-        if (string.IsNullOrWhiteSpace(statName) || statName.Length == 0)
+        if (string.IsNullOrWhiteSpace(statName) || statName.Length == 0) //Don't let this fail silently. Without some kind of log or it crashing, you'll never know
             return;
 
-        foreach (StatImpact stat in m_statsToEffect)
+        if (TryGetStat(statName, out StatImpact stat))
         {
-            if (stat != null && stat.StatName.ToLower() == statName.ToLower())
-            {
-                stat.ApplyStatChange(Value);
-                return;
-            }
+            stat.ApplyStatChange(Value);            
         }
+    }
 
-        Debug.Log($"Stat {statName} was not found!");
+    public void CallStatEffect(StatValue stat)
+    {
+        CallStatEffect(stat.statName, stat.currentValue);
     }
 
     [Button]
     public void UpdateStatEffectsMaxValue(string statName, float max)
     {
-        if (string.IsNullOrWhiteSpace(statName) || statName.Length == 0)
+        if (string.IsNullOrWhiteSpace(statName) || statName.Length == 0) //Don't let this fail silently. Without some kind of log or it crashing, you'll never know
             return;
 
-        foreach (StatImpact stat in m_statsToEffect)
+        if(TryGetStat(statName, out StatImpact stat))
         {
-            if (stat != null && stat.StatName.ToLower() == statName.ToLower())
-            {
-                stat.MaxValue = max;
-                return;
-            }
+            stat.MaxValue = max;
         }
-
-        Debug.Log($"Stat {statName} was not found!");
     }
 
     public StatImpact GetStat(string statName)
@@ -57,8 +50,15 @@ public class StatImpactModule : BaseModule
             }
         }
 
-        Debug.Log($"Stat {statName} was not found!");
+        Debug.LogError($"Stat {statName} was not found!");
         return null;
+    }
+
+    public bool TryGetStat(string statName, out StatImpact stat)
+    {
+        stat = GetStat(statName);
+        if(stat == null) { return false; }
+        return true;
     }
 }
 
@@ -67,12 +67,15 @@ public class StatImpact
 {
     #region Variables
     [Title("$StatName")]
-    public string StatName = "Unassigned";
+    [SerializeField] private StatValue stat = new StatValue("unnassigned", 0f);
     public float MinValue = 0f;
     public float MaxValue = 0f;
-    public float CurrentValue = 0f;
     [FoldoutGroup("Event")]
     public UnityEvent StatChangeEvent = new UnityEvent();
+
+    public StatValue Stat => stat;
+    public string StatName { get => stat.statName; }
+    public float CurrentValue { get => stat.currentValue; set => stat.currentValue = value; }
     #endregion
 
     #region Methods
@@ -84,4 +87,17 @@ public class StatImpact
 
     public float GetStatChange() => CurrentValue;
     #endregion
+}
+
+[Serializable]
+public struct StatValue
+{
+    public string statName;
+    public float currentValue;
+
+    public StatValue(string name, float value)
+    {
+        statName = name;
+        currentValue = value;
+    }
 }
