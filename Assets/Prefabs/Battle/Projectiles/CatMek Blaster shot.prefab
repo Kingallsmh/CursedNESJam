@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 7119069832270116474}
   - component: {fileID: 5157151743938065787}
   - component: {fileID: 8384112244866509437}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -116,10 +116,9 @@ GameObject:
   - component: {fileID: 7245709072875855297}
   - component: {fileID: 500144599857172586}
   - component: {fileID: 1272012654198416933}
-  - component: {fileID: 237097208091657444}
   - component: {fileID: 4053810450089849667}
   - component: {fileID: 7520195169289855553}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: CatMek Blaster shot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -175,19 +174,6 @@ MonoBehaviour:
   - {fileID: 2100000, guid: 5838f49f31eb45c4ebe82c5b198118eb, type: 2}
   - {fileID: 2100000, guid: 31a11c2b8fa04ee45b94cc57f4a29f8e, type: 2}
   timePerMaterial: 0.1
---- !u!114 &237097208091657444
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2621399838652445450}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7d3ad9a98f97d6c4e8452d6cb931a819, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::DestroyAfterTime
-  time: 2
 --- !u!54 &4053810450089849667
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -230,6 +216,23 @@ MonoBehaviour:
   rb: {fileID: 4053810450089849667}
   onReachedEnd:
     m_PersistentCalls:
-      m_Calls: []
-  hitAreaSize: 0.8
+      m_Calls:
+      - m_Target: {fileID: 7520195169289855553}
+        m_TargetAssemblyTypeName: ProjectileControl, Assembly-CSharp
+        m_MethodName: DestroyThis
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   hitTrigger: IsHit
+  hitAreaSize: 0.8
+  cooldownTime: 0.5
+  damagedStat:
+    statName: Health
+    currentValue: 1
+  defaultSpeed: 15

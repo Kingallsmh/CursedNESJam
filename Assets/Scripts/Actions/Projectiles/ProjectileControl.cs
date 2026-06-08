@@ -5,8 +5,10 @@ public class ProjectileControl : MonoBehaviour, ICrosshairAction
 {
     [SerializeField] Rigidbody rb;
     [SerializeField] UnityEvent onReachedEnd;
-    [SerializeField] float hitAreaSize = 0.1f;
     [SerializeField] string hitTrigger = "IsHit";
+    [SerializeField] float hitAreaSize = 0.1f;
+    [SerializeField] float cooldownTime = 0.5f;
+    [SerializeField] StatValue damagedStat = new StatValue("Health", 1);
 
     [SerializeField] float defaultSpeed = 15;
 
@@ -24,8 +26,8 @@ public class ProjectileControl : MonoBehaviour, ICrosshairAction
     {
         if(transform.position.z >= zTarget)
         {
-            onReachedEnd.Invoke();
             HitArea();
+            onReachedEnd.Invoke();
         }
     }
 
@@ -45,10 +47,22 @@ public class ProjectileControl : MonoBehaviour, ICrosshairAction
                 module = hitArray[i].collider.GetComponent<BaseModule>();
             }
             if(module == null) { continue; }
-            if(module.GetOwner().TryGetModule(out AnimatorModule animModule) == false) { continue; }
-            animModule.SetAnimatorTrigger(hitTrigger);
+            if(module.GetOwner().TryGetModule(out StatImpactModule statModule) == false) { continue; }
+            //animModule.SetAnimatorTrigger(hitTrigger);
             didHit = true;
         }
-        if (didHit) { Destroy(gameObject); }
+        if (didHit) { DestroyThis(); }
+    }
+
+    public void DestroyThis()
+    {
+        Destroy(gameObject);
+    }
+
+    public float GetCooldownTime()
+    {
+        return cooldownTime;
     }
 }
+
+

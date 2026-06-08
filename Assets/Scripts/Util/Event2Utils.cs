@@ -21,3 +21,6 @@ public class FloatEvent : UnityEvent2<float> { }
 
 [Serializable]
 public class ButtonStateEvent : UnityEvent2<ButtonState> { }
+
+[Serializable]
+public class HurtInfoEvent : UnityEvent2<HurtInfo> { }

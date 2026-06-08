@@ -1,8 +1,9 @@
-using System.Collections.Generic;
 using Sirenix.OdinInspector;
-using UnityEngine.Events;
-using UnityEngine;
 using System;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.Events;
+using static UnityEngine.Rendering.DebugUI;
 
 public class StatImpactModule : BaseModule
 {
@@ -12,20 +13,41 @@ public class StatImpactModule : BaseModule
     List<StatImpact> m_statsToEffect = new List<StatImpact>();
 
     [Button]
-    public void CallStatEffect(string statName, float Value)
+    public void SetStatEffect(string statName, float Value)
     {
         if (string.IsNullOrWhiteSpace(statName) || statName.Length == 0) //Don't let this fail silently. Without some kind of log or it crashing, you'll never know
             return;
 
         if (TryGetStat(statName, out StatImpact stat))
         {
-            stat.ApplyStatChange(Value);            
+            stat.SetStat(Value);            
+        }
+    }    
+
+    public void SetStatEffect(StatValue stat)
+    {
+        SetStatEffect(stat.statName, stat.currentValue);
+    }
+
+    public void ApplyStatEffect(string statName, float value)
+    {
+        if (TryGetStat(statName, out StatImpact stat))
+        {
+            stat.SetStat(value);
         }
     }
 
-    public void CallStatEffect(StatValue stat)
+    public void ApplyStatEffect(StatValue stat)
     {
-        CallStatEffect(stat.statName, stat.currentValue);
+        ApplyStatEffect(stat.statName, stat.currentValue);
+    }
+
+    public void ApplyHurtInfo(HurtInfo info)
+    {
+        for (int i = 0; i < info.affectedStats.Count; i++)
+        {
+            ApplyStatEffect(info.affectedStats[i]);
+        }
     }
 
     [Button]
@@ -79,10 +101,16 @@ public class StatImpact
     #endregion
 
     #region Methods
-    public void ApplyStatChange(float value)
+    public void SetStat(float value)
     {
         CurrentValue = Mathf.Clamp(value, MinValue, MaxValue);
         StatChangeEvent.Invoke();
+    }
+
+    public void AddToStat(float value)
+    {
+        float newValue = CurrentValue + value;
+        SetStat(value);
     }
 
     public float GetStatChange() => CurrentValue;
