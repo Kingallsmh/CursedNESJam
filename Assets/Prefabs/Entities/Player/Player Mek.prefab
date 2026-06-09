@@ -1498,7 +1498,7 @@ MonoBehaviour:
   m_statsToEffect:
   - stat:
       statName: Health
-      currentValue: 0
+      currentValue: 8
     MinValue: 0
     MaxValue: 8
     StatChangeEvent:
@@ -2159,5 +2159,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AttackModule
   projectilePrefab: {fileID: 2621399838652445450, guid: 114f68e36aa122642bf7e1e9c150800a, type: 3}
-  crosshair: {fileID: 212637949171439280}
+  crosshair: {fileID: 4242516694745276892}
   speed: 15

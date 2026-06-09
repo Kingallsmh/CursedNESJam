@@ -18,7 +18,7 @@ public class ProjectileControl : MonoBehaviour, ICrosshairAction
     {
         zTarget = crosshair.position.z;
         transform.position = owner.transform.position;
-        Vector3 direction = (crosshair.position - transform.position).normalized;
+        Vector3 direction = (crosshair.position - owner.transform.position).normalized;
         rb.linearVelocity = direction * defaultSpeed;
     }
 
@@ -38,10 +38,10 @@ public class ProjectileControl : MonoBehaviour, ICrosshairAction
         for(int i = 0; i < hitArray.Length; i++)
         {
             BaseModule module = null;
-            if (hitArray[i].rigidbody)
-            {
-                module = hitArray[i].rigidbody.GetComponent<BaseModule>();
-            }
+            //if (hitArray[i].rigidbody)
+            //{
+            //    module = hitArray[i].rigidbody.GetComponent<BaseModule>();
+            //}
             if (hitArray[i].collider)
             {
                 module = hitArray[i].collider.GetComponent<BaseModule>();

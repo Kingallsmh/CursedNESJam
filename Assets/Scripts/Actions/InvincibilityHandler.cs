@@ -15,6 +15,8 @@ public class InvincibilityHandler : MonoBehaviour
 
     Coroutine currentRoutine;
 
+    StatImpact additionalTime;
+
     public void StartInvincibility()
     {
         if(currentRoutine != null) { Debug.LogWarning("Trying start another Invincibility while still invincible!"); return; }
@@ -25,6 +27,11 @@ public class InvincibilityHandler : MonoBehaviour
     {
         hitbox.IsHittable = true;
         StopCoroutine(currentRoutine);
+    }
+
+    public float GetTotalTime()
+    {
+        return additionalTime.CurrentValue + totalTime;
     }
 
     IEnumerator InvincibilityRoutine()
