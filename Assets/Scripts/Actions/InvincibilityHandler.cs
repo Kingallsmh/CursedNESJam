@@ -27,6 +27,7 @@ public class InvincibilityHandler : MonoBehaviour
     {
         hitbox.IsHittable = true;
         StopCoroutine(currentRoutine);
+        currentRoutine = null;
     }
 
     public float GetTotalTime()
@@ -40,6 +41,7 @@ public class InvincibilityHandler : MonoBehaviour
         onStart.Invoke();
         yield return new WaitForSeconds(totalTime);
         hitbox.IsHittable = true;
+        currentRoutine = null;
         onEnd.Invoke();
     }
 }

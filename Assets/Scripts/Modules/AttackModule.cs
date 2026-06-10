@@ -4,7 +4,6 @@ public class AttackModule : BaseModule
 {
     [SerializeField] GameObject projectilePrefab;
     [SerializeField] Transform crosshair;
-    [SerializeField] float speed;
 
     public void FireProjectile()
     {

@@ -33,7 +33,7 @@ public class StatImpactModule : BaseModule
     {
         if (TryGetStat(statName, out StatImpact stat))
         {
-            stat.SetStat(value);
+            stat.AddToStat(value);
         }
     }
 
@@ -94,6 +94,8 @@ public class StatImpact
     public float MaxValue = 0f;
     [FoldoutGroup("Event")]
     public UnityEvent StatChangeEvent = new UnityEvent();
+    [FoldoutGroup("Event")]
+    public FloatEvent StatValueUpdateEvent = new FloatEvent();
 
     public StatValue Stat => stat;
     public string StatName { get => stat.statName; }
@@ -103,14 +105,15 @@ public class StatImpact
     #region Methods
     public void SetStat(float value)
     {
-        CurrentValue = Mathf.Clamp(value, MinValue, MaxValue);
+        CurrentValue = MinValue == 0 && MaxValue == 0f ? value : Mathf.Clamp(value, MinValue, MaxValue);
         StatChangeEvent.Invoke();
+        StatValueUpdateEvent.Invoke(CurrentValue);
     }
 
     public void AddToStat(float value)
     {
         float newValue = CurrentValue + value;
-        SetStat(value);
+        SetStat(newValue);
     }
 
     public float GetStatChange() => CurrentValue;

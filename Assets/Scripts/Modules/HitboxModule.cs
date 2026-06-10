@@ -29,5 +29,5 @@ public class HitboxModule : BaseModule
 public class HurtInfo
 {
     public Entity owner;
-    public List<StatValue> affectedStats;
+    public List<StatValue> affectedStats = new List<StatValue>();
 }
