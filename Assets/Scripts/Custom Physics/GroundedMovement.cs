@@ -8,6 +8,7 @@ using UnityEngine.InputSystem;
 
 public class GroundedMovement : MonoBehaviour
 {
+    [SerializeField] StatImpactModule statModule;
     [SerializeField] Physics2DModule physics2DModule;
     [SerializeField] float horizontalSpeed;
     [FoldoutGroup("Events")]
@@ -18,6 +19,9 @@ public class GroundedMovement : MonoBehaviour
     [SerializeField] FloatEvent onXAxisMove;
     [FoldoutGroup("Events")]
     [SerializeField] Vector2Event onMovingDirection;
+
+    [FoldoutGroup("Stat Settings")]
+    [SerializeField] StatValue speedEffectedByOwnerStat = new StatValue("SPD", 0.2f);
 
     bool inAir;
     Vector2 input;
@@ -91,5 +95,15 @@ public class GroundedMovement : MonoBehaviour
         if(isInputLocked == value) { return; }
         isInputLocked = value;
         input = Vector2.zero;
+    }
+
+    public float GetAddedStatBonus()
+    {
+        float speedAdded = 0;
+        if(statModule.TryGetStat(speedEffectedByOwnerStat.statName, out StatImpact stat))
+        {
+            speedAdded = stat.CurrentValue * speedEffectedByOwnerStat.currentValue;
+        }
+        return speedAdded;
     }
 }
